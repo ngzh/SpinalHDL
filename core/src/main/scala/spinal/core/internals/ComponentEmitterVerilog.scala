@@ -1568,6 +1568,7 @@ end
     case  e: Operator.UInt.Or                         => operatorImplAsBinaryOperator("|")(e)
     case  e: Operator.UInt.And                        => operatorImplAsBinaryOperator("&")(e)
     case  e: Operator.UInt.Xor                        => operatorImplAsBinaryOperator("^")(e)
+    case  e: Operator.UInt.Xnor                       => operatorImplAsBinaryOperator("~^")(e)
     case  e: Operator.UInt.Not                        =>  operatorImplAsUnaryOperator("~")(e)
 
     case  e: Operator.UInt.Equal                      => operatorImplAsBinaryOperator("==")(e)
@@ -1593,6 +1594,7 @@ end
     case  e: Operator.SInt.Or                         => operatorImplAsBinaryOperator("|")(e)
     case  e: Operator.SInt.And                        => operatorImplAsBinaryOperator("&")(e)
     case  e: Operator.SInt.Xor                        => operatorImplAsBinaryOperator("^")(e)
+    case  e: Operator.SInt.Xnor                       => operatorImplAsBinaryOperator("~^")(e)
     case  e: Operator.SInt.Not                        =>  operatorImplAsUnaryOperator("~")(e)
     case  e: Operator.SInt.Minus                      => operatorImplAsUnaryOperator("-")(e)
 
@@ -1614,6 +1616,7 @@ end
     case  e: Operator.Bits.Or                         => operatorImplAsBinaryOperator("|")(e)
     case  e: Operator.Bits.And                        => operatorImplAsBinaryOperator("&")(e)
     case  e: Operator.Bits.Xor                        => operatorImplAsBinaryOperator("^")(e)
+    case  e: Operator.Bits.Xnor                       => operatorImplAsBinaryOperator("~^")(e)
     case  e: Operator.Bits.Not                        =>  operatorImplAsUnaryOperator("~")(e)
     case  e: Operator.Bits.Equal                      => operatorImplAsBinaryOperator("==")(e)
     case  e: Operator.Bits.NotEqual                   => operatorImplAsBinaryOperator("!=")(e)
@@ -1634,6 +1637,7 @@ end
     case  e: Operator.Bool.And                        => operatorImplAsBinaryOperator("&&")(e)
     case  e: Operator.Bool.Or                         => operatorImplAsBinaryOperator("||")(e)
     case  e: Operator.Bool.Xor                        => operatorImplAsBinaryOperator("^")(e)
+    case  e: Operator.Bool.Xnor                       => operatorImplAsBinaryOperator("~^")(e)
 
     //senum
     case  e: Operator.Enum.Equal                      => enumEgualsImpl(true)(e)

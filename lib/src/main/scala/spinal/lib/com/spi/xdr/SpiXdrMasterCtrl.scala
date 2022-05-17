@@ -731,7 +731,7 @@ object SpiXdrMasterCtrl {
       val lateSampling = io.config.mod.muxListDc(p.mods.map(m => m.id -> Bool(m.lateSampling)))
       val readFill, readDone = False
       val ss = p.ssGen generate (Reg(Bits(p.spi.ssWidth bits)) init(0))
-      p.ssGen generate (io.spi.ss := ~(ss ^ io.config.ss.activeHigh))
+      p.ssGen generate (io.spi.ss := (ss ~^ io.config.ss.activeHigh))
 
 
       io.cmd.ready := False

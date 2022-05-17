@@ -906,6 +906,9 @@ trait BitwiseOp[T <: Data]{
   /** Logical XOR operator */
   def ^(right: T): T
 
+  /** Logical NXOR operator */
+  def ~^(right: T): T
+
   /** Inverse bitwise operator */
   def unary_~ : T
 }

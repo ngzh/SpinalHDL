@@ -72,6 +72,8 @@ class Bool extends BaseType with DataPrimitives[Bool]  with BaseTypePrimitives[B
 
   override def ^(b: Bool): Bool  = wrapLogicalOperator(b, new Operator.Bool.Xor)
 
+  override def ~^(b: Bool): Bool  = wrapLogicalOperator(b, new Operator.Bool.Xnor)
+
   /**
     * Logical NOT
     * @example{{{ val result = !myBool1 }}}

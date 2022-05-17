@@ -1183,6 +1183,10 @@ class ComponentEmitterVhdl(
     s"(${emitExpression(e.left)} $vhd ${emitExpression(e.right)})"
   }
 
+  def operatorImplAsBinaryNxorOperator()(e: BinaryOperator): String = {
+    s"not (${emitExpression(e.left)} xor ${emitExpression(e.right)})"
+  }
+
   def operatorImplAsBinaryOperatorStdCast(vhd: String)(e: BinaryOperator): String = {
     s"pkg_toStdLogic(${emitExpression(e.left)} $vhd ${emitExpression(e.right)})"
   }
@@ -1360,6 +1364,7 @@ class ComponentEmitterVhdl(
     case  e: Operator.UInt.Or                        => operatorImplAsBinaryOperator("or")(e)
     case  e: Operator.UInt.And                       => operatorImplAsBinaryOperator("and")(e)
     case  e: Operator.UInt.Xor                       => operatorImplAsBinaryOperator("xor")(e)
+    case  e: Operator.UInt.Xnor                      => operatorImplAsBinaryNxorOperator()(e)
     case  e: Operator.UInt.Not                       => unaryOperatorImplAsFunction("pkg_not")(e) //workaround cadence incisive 15.20
 
     case  e: Operator.UInt.Equal                     => operatorImplAsBinaryOperatorStdCast("=")(e)
@@ -1385,6 +1390,7 @@ class ComponentEmitterVhdl(
     case  e: Operator.SInt.Or                        => operatorImplAsBinaryOperator("or")(e)
     case  e: Operator.SInt.And                       => operatorImplAsBinaryOperator("and")(e)
     case  e: Operator.SInt.Xor                       => operatorImplAsBinaryOperator("xor")(e)
+    case  e: Operator.SInt.Xnor                      => operatorImplAsBinaryNxorOperator()(e)
     case  e: Operator.SInt.Not                       => unaryOperatorImplAsFunction("pkg_not")(e) //workaround cadence incisive 15.20
     case  e: Operator.SInt.Minus                     => operatorImplAsUnaryOperator("-")(e)
 
@@ -1408,6 +1414,7 @@ class ComponentEmitterVhdl(
     case  e: Operator.Bits.Or                        => operatorImplAsBinaryOperator("or")(e)
     case  e: Operator.Bits.And                       => operatorImplAsBinaryOperator("and")(e)
     case  e: Operator.Bits.Xor                       => operatorImplAsBinaryOperator("xor")(e)
+    case  e: Operator.Bits.Xnor                      => operatorImplAsBinaryNxorOperator()(e)
     case  e: Operator.Bits.Not                       => unaryOperatorImplAsFunction("pkg_not")(e) //workaround cadence incisive 15.20
 
     case  e: Operator.Bits.Equal                     => operatorImplAsBinaryOperatorStdCast("=")(e)
@@ -1429,6 +1436,7 @@ class ComponentEmitterVhdl(
     case  e: Operator.Bool.And                       => operatorImplAsBinaryOperator("and")(e)
     case  e: Operator.Bool.Or                        => operatorImplAsBinaryOperator("or")(e)
     case  e: Operator.Bool.Xor                       => operatorImplAsBinaryOperator("xor")(e)
+    case  e: Operator.Bool.Xnor                      => operatorImplAsBinaryNxorOperator()(e)
 
     //senum
     case  e: Operator.Enum.Equal                     => enumEgualsImpl(true)(e)

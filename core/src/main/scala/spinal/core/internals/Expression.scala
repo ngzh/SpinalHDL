@@ -436,6 +436,11 @@ object Operator {
       override def opName: String = "Bool ^ Bool"
     }
 
+    class Xnor extends BinaryOperator {
+      override def getTypeObject = TypeBool
+      override def opName: String = "Bool ~^ Bool"
+    }
+
     class Not extends UnaryOperator {
       override def getTypeObject = TypeBool
       override def opName: String = "! Bool"
@@ -511,6 +516,16 @@ object Operator {
       override def toString() = s"(${super.toString()})[$getWidth bits]"
     }
 
+    abstract class Xnor extends BinaryOperatorWidthableInputs with Widthable {
+      def resizeFactory: Resize
+      override def calcWidth(): Int = InferWidth.notResizableElseMax(this)
+      override def normalizeInputs: Unit = {
+        val targetWidth = getWidth
+        left  = InputNormalize.resizedOrUnfixedLit(left, targetWidth, resizeFactory, this, this)
+        right = InputNormalize.resizedOrUnfixedLit(right, targetWidth, resizeFactory, this, this)
+      }
+      override def toString() = s"(${super.toString()})[$getWidth bits]"
+    }
 
     abstract class Add extends BinaryOperatorWidthableInputs with Widthable {
       def resizeFactory: Resize
@@ -673,6 +688,12 @@ object Operator {
       def resizeFactory: Resize = new ResizeBits
     }
 
+    class Xnor extends BitVector.Xnor {
+      override def getTypeObject = TypeBits
+      override def opName: String = "Bits ~^ Bits"
+      def resizeFactory: Resize = new ResizeBits
+    }
+
     class Equal extends BitVector.Equal {
       override def normalizeInputs: Unit = {
         val targetWidth = InferWidth.notResizableElseMax(this)
@@ -758,6 +779,12 @@ object Operator {
     class Xor extends BitVector.Xor {
       override def getTypeObject  = TypeUInt
       override def opName: String = "UInt ^ UInt"
+      def resizeFactory: Resize   = new ResizeUInt
+    }
+
+    class Xnor extends BitVector.Xnor {
+      override def getTypeObject  = TypeUInt
+      override def opName: String = "UInt ~^ UInt"
       def resizeFactory: Resize   = new ResizeUInt
     }
 
@@ -904,6 +931,12 @@ object Operator {
     class Xor extends BitVector.Xor {
       override def getTypeObject  = TypeSInt
       override def opName: String = "SInt ^ SInt"
+      def resizeFactory: Resize   = new ResizeSInt
+    }
+
+    class Xnor extends BitVector.Xnor {
+      override def getTypeObject  = TypeSInt
+      override def opName: String = "SInt ~^ SInt"
       def resizeFactory: Resize   = new ResizeSInt
     }
 
